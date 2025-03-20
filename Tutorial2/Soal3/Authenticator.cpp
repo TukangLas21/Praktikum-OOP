@@ -37,21 +37,14 @@ void Authenticator :: registerUser (const string &username, const string &passwo
 }
 
 void Authenticator :: login(const string &username, const string &password) {
-    bool check = false;
-    int idx = 0;
     for (int i = 0; i < this->userCount; i++) {
         if (username == this->users[i]->getUsername() && this->users[i]->checkPassword(password)) {
-            check = true;
-            idx = i;
-            break;
+            this->currentUser = users[i];
+            cout << "Sukses: Login berhasil! Selamat datang, " << username << "." << endl;
+            return;
         }
     }
-    if (check) {
-        this->currentUser = users[idx];
-        cout << "Sukses: Login berhasil! Selamat datang, " << username << "." << endl;
-    } else {
-        cout << "Gagal: Username atau password salah!" << endl;
-    }
+    cout << "Gagal: Username atau password salah!" << endl;
 }
 
 void Authenticator :: logout() {
@@ -74,13 +67,17 @@ void Authenticator :: accessResource() const {
 void Authenticator :: setResource(const string &newResource) {
     if (this->currentUser == nullptr) {
         cout << "Gagal: Tidak bisa mengubah resource! Silakan login terlebih dahulu." << endl;
-    } else if (this->currentUser->isAdmin() == false) {
-        cout << "Gagal: Tidak bisa mengubah resource! Hanya admin yang dapat melakukan ini." << endl;
     } else {
-        this->secretResource = newResource;
-        cout << "Sukses: Resource telah diperbarui oleh  " << this->currentUser->getUsername() << "." << endl;
+        if (this->currentUser->isAdmin()) {
+            this->secretResource = newResource;
+            cout << "Sukses: Resource telah diperbarui oleh " << this->currentUser->getUsername() << "." << endl;
+        } else {
+            cout << "Gagal: Tidak bisa mengubah resource! Hanya admin yang dapat melakukan ini." << endl;
+        }
     }
+
 }
 
 Authenticator::~Authenticator() {
+
 }

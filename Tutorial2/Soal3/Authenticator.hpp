@@ -49,7 +49,7 @@ public:
    * - "Gagal: Username atau password salah!" jika kombinasi username dan password tidak ditemukan.
    * - "Sukses: Login berhasil! Selamat datang, <username>." jika login berhasil.
    *      *<username> diganti dengan nama pengguna yang berhasil login.
-   */
+   */ 
 
   void logout();
   /* Melakukan logout dari sesi yang sedang berjalan.
