@@ -39,7 +39,17 @@ public:
         if (this->numOfPairs == MAX_CAP) {
             cout << "KeyValue penuh! Tidak bisa menambahkan KeyValue lagi." << endl;
             return;
-        } else {
+        } 
+
+        bool found = false;
+        for (int i = 0; i < numOfPairs; i++) {
+            if (k == this->keys[i]) {
+                this->values[i] = v;
+                found = true;
+                break;
+            }
+        }
+        if (!found) {
             this->keys[this->numOfPairs] = k;
             this->values[this->numOfPairs] = v;
             this->numOfPairs++;
@@ -99,7 +109,21 @@ public:
         if (this->numOfPairs == MAX_CAP) {
             cout << "KeyValue penuh! Tidak bisa menambahkan KeyValue lagi." << endl;
             return;
-        } else {
+        } 
+
+        bool found = false;
+        for (int i = 0; i < numOfPairs; i++) {
+            if (k == this->keys[i]) {
+                this->values[i] = v;
+                found = true;
+                break;
+            } else if (k - keys[i] < 0.01 || keys[i] - k > 0.01) {
+                this->values[i] = v;
+                found = true;
+                break;
+            }
+        }
+        if (!found) {
             this->keys[this->numOfPairs] = k;
             this->values[this->numOfPairs] = v;
             this->numOfPairs++;
