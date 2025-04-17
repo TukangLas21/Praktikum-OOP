@@ -22,60 +22,50 @@ Gudang::Gudang(int kapasitas, int uang, int tenagaKerja) {
 }
 
 Gudang::~Gudang() {
+    vector<Barang *>::iterator it;
+    for (it = daftarBarang.begin(); it != daftarBarang.end(); it++) {
+        delete *it;
+    }
 }
 
 void Gudang::simpanBarang(Barang *barang) {
-    if (barang->getJenis() == "Makanan") {
-        BarangMakanan* cur = dynamic_cast<BarangMakanan*>(barang);
-        try {
-            if (cur->getHariKedaluwarsa() <= 0) {
-                throw BarangKedaluwarsaException();
+    try {
+        if (barang->getJenis() == "Makanan") {
+            BarangMakanan *x = dynamic_cast<BarangMakanan *>(barang);
+            if (x->getHariKedaluwarsa() <= 0) {
+                BarangKedaluwarsaException e;
+                throw e;
             }
-            pakaiKapasitas(cur->getBerat());
-            pakaiUang(100);
-            pakaiTenagaKerja();
-
-            daftarBarang.push_back(cur);
-            cout << "Barang [" << daftarBarang.size() - 1 << "] " << cur->getNama() << " berhasil disimpan" << endl;
         }
-        catch (BarangKedaluwarsaException e) {
-            cout << e.what() << ", buang dulu." << endl;
-        }
-        catch (KapasitasPenuhException e) {
-            cout << e.what() << ", perluas gudang dulu." << endl;
-        }
-        catch (UangTidakCukupException e) {
-            kapasitasTerpakai -= cur->getBerat();
-            cout << e.what() << ", cari pemasukan dulu." << endl;
-        }
-        catch (TenagaKerjaTidakCukupException e) {
-            kapasitasTerpakai -= cur->getBerat();
-            tambahUang(100);
-            cout << e.what() << ", rekrut dulu." << endl;
-        }
+        pakaiKapasitas(barang->getBerat());
+        pakaiUang(100);
+        pakaiTenagaKerja();
+    
+        kapasitasTerpakai += barang->getBerat();
+        uang -= 100;
+        tenagaKerja--;
+    
+        daftarBarang.push_back(barang);
+        cout << "Barang [" << daftarBarang.size() - 1 << "] " << barang->getNama() << " berhasil disimpan" << endl;
+    } 
+    
+    catch (BarangKedaluwarsaException e) {
+        cout << e.what() << ", buang dulu." << endl;
     }
-    else {
-        BarangElektronik* cur = dynamic_cast<BarangElektronik*>(barang);
-        try {
-            pakaiKapasitas(cur->getBerat());
-            pakaiUang(100);
-            pakaiTenagaKerja();
 
-            daftarBarang.push_back(cur);
-            cout << "Barang [" << daftarBarang.size() - 1 << "] " << cur->getNama() << " berhasil disimpan" << endl;
-        }
-        catch (KapasitasPenuhException e) {
-            cout << e.what() << ", perluas gudang dulu." << endl;
-        }
-        catch (UangTidakCukupException e) {
-            kapasitasTerpakai -= cur->getBerat();
-            cout << e.what() << ", cari pemasukan dulu." << endl;
-        }
-        catch (TenagaKerjaTidakCukupException e) {
-            kapasitasTerpakai -= cur->getBerat();
-            tambahUang(100);
-            cout << e.what() << ", rekrut dulu." << endl;
-        }
+    catch (KapasitasPenuhException e) {
+        cout << e.what() << ", perluas gudang dulu." << endl;
+    }
+
+    catch (UangTidakCukupException e) {
+        // kapasitasTerpakai -= barang->getBerat();
+        cout << e.what() << ", cari pemasukan dulu." << endl;
+    }
+
+    catch (TenagaKerjaTidakCukupException e) {
+        // kapasitasTerpakai -= barang->getBerat();
+        // tambahUang(100);
+        cout << e.what() << ", rekrut dulu." << endl;
     }
 }
 
@@ -94,31 +84,34 @@ void Gudang::tambahUang(int jumlah) {
 void Gudang::pakaiKapasitas(int kg) {
     if (kapasitasTerpakai + kg > kapasitasTotal) {
         throw KapasitasPenuhException();
-    } else {
-        kapasitasTerpakai += kg;
-    }
+    } 
+    // else {
+    //     kapasitasTerpakai += kg;
+    // }
 }
 
 void Gudang::pakaiUang(int jumlah) {
-    if (uang < jumlah) {
+    if (uang - jumlah < 0) {
         throw UangTidakCukupException();
-    } else {
-        uang -= jumlah;
-    }
+    } 
+    // else {
+    //     uang -= jumlah;
+    // }
 }
 
 void Gudang::pakaiTenagaKerja() {
     if (tenagaKerja <= 0) {
         throw TenagaKerjaTidakCukupException();
-    } else {
-        tenagaKerja--;
-    }
+    } 
+    // else {
+    //     tenagaKerja--;
+    // }
 }
 
 void Gudang::sebutBarang(int idx) {
     try
     {
-        Barang *barang = daftarBarang[idx];
+        Barang *barang = daftarBarang.at(idx);
         cout << barang->getNama() << " - " << barang->getJenis() << " - " << barang->getBerat() << "kg" << endl;
     }
     catch(const out_of_range &e)
