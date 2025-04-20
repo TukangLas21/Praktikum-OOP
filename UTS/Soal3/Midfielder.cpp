@@ -66,7 +66,7 @@ int Midfielder::transferRate() {
 // Key Passes: <keyPasses>
 // Playmaker Rating: <playmakerRating>
 void Midfielder::displayInfo() {
-    this->Footballer::displayInfo();
+    Footballer::displayInfo();
     cout << "Assists: " << this->assist << endl;
     cout << "Key Passes: " << this->keyPasses << endl;
     cout << "Playmaker Rating: " << this->playmakerRating() << endl;

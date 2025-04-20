@@ -47,6 +47,9 @@ Footballer::~Footballer() {}
 // Operator assignment
 // ...
 Footballer& Footballer::operator=(const Footballer& other) {
+    if (this == &other) {
+        return *this;
+    }
     this->name = other.name;
     this->birthYear = other.birthYear;
     this->playPosition = other.playPosition;
@@ -114,7 +117,8 @@ int Footballer::getAge() const {
 // BMI = weight(kg) / (height(m))²
 // getBMI()
 double Footballer::getBMI() const {
-    return (this->weight / (this->height * this->height));
+    double heightInMeters = this->height / 100.0; 
+    return (this->weight / (heightInMeters * heightInMeters));
 }
 
 // gunakan BMI untuk mendapat category
@@ -129,6 +133,7 @@ string Footballer::getCategory() const {
     if (18.5 <= BMI && BMI < 25.0) return "Normal";
     if (25.0 <= BMI && BMI < 30.0) return "Overweight";
     if ( BMI >= 30.0) return "Obese";
+    return "Unknown";
 }
 
 // Mencetak informasi footballer dengan format sebagai berikut:
@@ -144,6 +149,7 @@ void Footballer::displayInfo() {
     cout << "Age: " << this->getAge() << endl;
     cout << "Position: " << this->playPosition << endl;
     cout << "Nationality: " << this->nationality << endl;
-    cout << "BMI: " << this->getBMI() << fixed << setprecision(2) << " (" << this->getCategory() << ")" << endl;
+    cout << fixed << setprecision(2);
+    cout << "BMI: " << this->getBMI() << " (" << this->getCategory() << ")" << endl;
     cout << "Transfer Rate: " << this->transferRate() << endl;
 }

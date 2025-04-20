@@ -38,7 +38,7 @@ public:
 
   // Destructor
   // ...
-  ~Footballer();
+  virtual ~Footballer();
 
   // Operator assignment
   // ...

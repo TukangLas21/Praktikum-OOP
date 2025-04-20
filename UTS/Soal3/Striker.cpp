@@ -48,6 +48,9 @@ int Striker::getShotsOnTarget() const {
 // Hint: Gunakan static_cast<float> untuk mengonversi int ke float
 // ...
 float Striker::conversionRate() const {
+    if (this->shotsOnTarget == 0) {
+        return 0.0;
+    }
     return (this->goalScore / this->shotsOnTarget) * 100;
 }
 
@@ -65,7 +68,7 @@ int Striker::transferRate() {
 // Goals: <goalScore>
 // Conversion Rate: <conversionRate>%
 void Striker::displayInfo() {
-    this->Footballer::displayInfo();
+    Footballer::displayInfo();
     cout << "Goals: " << this->goalScore << endl;
     cout << "Conversion Rate: " << fixed << setprecision(2) << conversionRate() << endl; 
 }

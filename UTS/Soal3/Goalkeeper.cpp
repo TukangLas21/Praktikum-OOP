@@ -61,7 +61,10 @@ int Goalkeeper::getTotalShotsOnGoal() const {
 // return dalam bentuk float
 // ...
 float Goalkeeper::savePercentage() const {
-    return (this->saves / this->totalShotsOnGoal) * 100;
+    if (this->totalShotsOnGoal == 0) {
+        return 0.0; // Avoid division by zero
+    }
+    return ((this->saves) / this->totalShotsOnGoal) * 100.0;
 }
 
 // Override transferRate:

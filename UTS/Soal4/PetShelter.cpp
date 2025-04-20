@@ -52,7 +52,7 @@ void PetShelter<T>::addPet(const string &petName, int age, bool isDog, const str
         pets[petCount++] = new Dog(petName, age, extraInfo);
         pets[petCount - 1]->setId("D" + to_string(currentDogs + 1)); 
         currentDogs++;
-        cout < "Success: " << petName << " has been added as a Dog! Pet ID: " << pets[petCount - 1]->getId() << endl;
+        cout << "Success: " << petName << " has been added as a Dog! Pet ID: " << pets[petCount - 1]->getId() << endl;
     } else {
         if (currentCats >= catCapacity) {
             cout << "Error: No space for more cats!" << endl;
@@ -69,7 +69,7 @@ template <typename T>
 T* PetShelter<T>::findPet(const string &petID) const {
     int id = -1;
     for (int i = 0; i < petCount; i++) {
-        if (pets[i]->getId == petID) {
+        if (pets[i]->getId() == petID) {
             id = i;
             break;
         }
@@ -78,9 +78,11 @@ T* PetShelter<T>::findPet(const string &petID) const {
         cout << "Pet ID is invalid!" << endl;
         return nullptr;
     } else {
-        Pet pet = dynamic_cast<T*>(pets[id]); 
-        pet.displayInfo(); 
-        return pet; // Return the found pet
+        T* pet = dynamic_cast<T*>(pets[id]);
+        if (pet) {
+            pet->displayInfo();
+        }
+        return pet;
     }
 }
 
@@ -127,10 +129,11 @@ void PetShelter<T>::removePet(const string &petID) {
         } else if (dynamic_cast<Cat*>(pets[id])) {
             currentCats--;
         }
-        delete pets[id]; // Hapus pet dari memori
+        delete pets[id]; // Delete pet from memory
         for (int j = id; j < petCount - 1; j++) {
-            pets[j] = pets[j + 1]; // Geser pet ke kiri
+            pets[j] = pets[j + 1]; // Shift pets to the left
         }
+        pets[petCount - 1] = nullptr; // Clear the last pointer
         petCount--;
     }
 }

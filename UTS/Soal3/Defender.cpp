@@ -70,7 +70,7 @@ int Defender::transferRate() {
 // Defensive Rating: <defensiveRating>
 // ...
 void Defender::displayInfo() {
-    this->Footballer::displayInfo();
+    Footballer::displayInfo();
     cout << "Tackle Success: " << this->tackleSuccess;
     cout << "Interceptions" << this->interceptions;
     cout << "Defensive Rating: " << this->defensiveRating();
