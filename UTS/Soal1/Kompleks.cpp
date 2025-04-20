@@ -66,6 +66,9 @@ bool Kompleks::operator==(const Kompleks& other) const {
 // a == b = (1==1) && (2==2) = true
 
 Kompleks& Kompleks::operator=(const Kompleks& other) {
+    if (this == &other) {
+        return *this;
+    }
     this->real = other.real;
     this->imag = other.imag;
     return *this;
@@ -73,17 +76,14 @@ Kompleks& Kompleks::operator=(const Kompleks& other) {
 // Menyalin dua bilangan kompleks
 
 ostream& operator<<(ostream& os, const Kompleks& c) {
-    if (c.real == 0) {
+    if (c.real == 0 && c.imag == 0) {
+        os << "0";
+    } else if (c.real == 0) {
         os << c.imag << "i";
     } else if (c.imag == 0) {
         os << c.real;
     } else {
-        if (c.imag < 0) {
-            double temp = c.imag * -1;
-            os << c.real << " - " << temp << "i";
-        } else {
-            os << c.real << " + " << c.imag << "i";
-        }
+        os << c.real << (c.imag < 0 ? " - " : " + ") << (c.imag < 0 ? -c.imag : c.imag) << "i";
     }
     return os;
 }
