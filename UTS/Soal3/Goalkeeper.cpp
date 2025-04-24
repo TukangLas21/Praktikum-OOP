@@ -55,16 +55,15 @@ int Goalkeeper::getTotalShotsOnGoal() const {
     return this->totalShotsOnGoal;
 }
 
-
 // Method tambahan: savePercentage
 // rumus: (saves / totalShotsOnGoal) * 100
 // return dalam bentuk float
 // ...
 float Goalkeeper::savePercentage() const {
-    if (this->totalShotsOnGoal == 0) {
-        return 0.0; // Avoid division by zero
+    if (totalShotsOnGoal == 0) {
+        return 0.0;
     }
-    return ((this->saves) / this->totalShotsOnGoal) * 100.0;
+    return (static_cast<float> (saves) / totalShotsOnGoal) * 100;
 }
 
 // Override transferRate:
@@ -82,7 +81,7 @@ int Goalkeeper::transferRate() {
 // Saves: <saves>
 // Save Percentage: <savePercentage>%
 void Goalkeeper::displayInfo() {
-    this->Footballer::displayInfo();
+    Footballer::displayInfo();
     cout << "Clean Sheets: " << this->cleanSheets << endl;
     cout << "Saves: " << this->saves << endl;
     cout << "Save Percentage: " << fixed << setprecision(2) << this->savePercentage() << "%" << endl;

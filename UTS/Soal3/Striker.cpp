@@ -19,7 +19,7 @@ Striker::Striker() : Footballer() {
 // nationality, height, dan weight gunakan nilai default superclass
 // ...
 Striker::Striker(string name, int birthYear, int goalScore, int shotsOnTarget) : Footballer() {
-    this->playPosition = "striker";
+    playPosition = "striker";
     this->name = name;
     this->birthYear = birthYear;
     this->goalScore = goalScore;
@@ -48,10 +48,8 @@ int Striker::getShotsOnTarget() const {
 // Hint: Gunakan static_cast<float> untuk mengonversi int ke float
 // ...
 float Striker::conversionRate() const {
-    if (this->shotsOnTarget == 0) {
-        return 0.0;
-    }
-    return (this->goalScore / this->shotsOnTarget) * 100;
+    if (shotsOnTarget == 0) return 0.0;
+    return static_cast<float> (goalScore) / shotsOnTarget * 100;
 }
 
 // Override transferRate:

@@ -21,7 +21,7 @@ Defender::Defender() : Footballer() {
 Defender::Defender(string name, int birthYear, int tackleSuccess, int interceptions) : Footballer() {
     this->name = name;
     this->birthYear = birthYear;
-    this->playPosition = "defender";
+    playPosition = "defender";
     this->tackleSuccess = tackleSuccess;
     this->interceptions = interceptions;
 }
@@ -71,7 +71,7 @@ int Defender::transferRate() {
 // ...
 void Defender::displayInfo() {
     Footballer::displayInfo();
-    cout << "Tackle Success: " << this->tackleSuccess;
-    cout << "Interceptions" << this->interceptions;
-    cout << "Defensive Rating: " << this->defensiveRating();
+    cout << "Tackle Success: " << this->tackleSuccess << endl;
+    cout << "Interceptions" << this->interceptions << endl;
+    cout << "Defensive Rating: " << this->defensiveRating() << endl;
 }
