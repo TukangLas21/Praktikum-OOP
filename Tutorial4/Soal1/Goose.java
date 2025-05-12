@@ -16,6 +16,7 @@ class Goose {
         System.out.println(this.name + " steals " + thing);       
     }
 
+    @Override
     public String toString() {
         String s = this.name + " goose says";
         for (int i = 0; i < this.honk; i++) {
