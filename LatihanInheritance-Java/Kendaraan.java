@@ -15,5 +15,5 @@ abstract public class Kendaraan {
     }
 
     abstract public void printInfo();
-    abstract public int biayaSewa(int lamaSewa);
+    abstract public int biayaSewa(int lamaSew);
 }
